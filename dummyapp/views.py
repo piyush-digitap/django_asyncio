@@ -51,11 +51,13 @@ class ConcurrentApiCall(APIView):
         # Call the asynchronous function using await
         return asyncio.run(self.async_post(request))
 
+
 class ConcurrentFunctionCall(APIView):
 
     async def add(self, data):
         a = data['a']
         b = data['b']
+        await asyncio.sleep(20)
         result = a + b
         return {'add_result': result}
 
@@ -68,12 +70,14 @@ class ConcurrentFunctionCall(APIView):
     async def mul(self, data):
         a = data['a']
         b = data['b']
+        await asyncio.sleep(5)
         result = a * b
         return {'mul_result': result}
 
     async def divide(self, data):
         a = data['a']
         b = data['b']
+
         if b == 0:
             return {'error': 'Division by zero is not allowed'}
         result = a / b
